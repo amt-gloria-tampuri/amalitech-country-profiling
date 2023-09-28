@@ -1,0 +1,30 @@
+
+.header{
+    display: flex;
+    padding: 1rem 3rem ;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.2);
+    /* background-color: white; */
+}
+.headerD{
+    background-color: var(--box-color);
+}
+.darkMode{
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    cursor: pointer;
+}
+
+
+@media(max-width:640px){
+.header{
+    padding: 1rem;
+    font-size: 14px;
+}
+.header h1{
+    font-size: 16px;
+}
+
+}

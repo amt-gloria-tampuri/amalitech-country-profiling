@@ -1,0 +1,127 @@
+.country{
+    padding-bottom: 6rem;
+}
+.countryD{
+    min-height: 100vh;
+    color: var(--white);
+    background-color: var(--very-dark-blueDM);
+}
+
+.countryDetails{
+    margin: 1rem 3rem;
+}
+
+.backButton{
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    width: fit-content;
+    border-radius: 0.3rem;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    color: var(--very-dark-blueDM);
+    /* box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.2); */
+}
+.backButtonD{
+color:white;
+padding: 0.5rem 1rem;
+background-color: var(--box-color);
+box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.2);
+}
+.link{
+    text-decoration: none;
+}
+
+.details{
+    margin-top: 5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+.flag{
+    width: 40%;
+    height: 350px;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background-color: red;
+}
+.flag img{
+    object-fit: cover;
+   height: 100%;
+   width: 100%;
+}
+
+.words{
+    width: 45%;
+}
+
+.moreDetails{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+
+}
+.details p{
+    font-weight: 700;
+    margin: 0.5rem 0;
+}
+.moreDetails span{
+    font-weight:100;
+}
+.borders{
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    /* align-items: center; */
+}
+.borders p{
+    width: 40%
+}
+.borderDis{
+    width: fit-content
+
+}
+.styleBorder{
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    
+}
+.styleBorder div{
+    display: grid;
+    place-content: center;
+    padding: 0.2rem 1.5rem;
+    box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.2);
+}
+.styleBorderD div{
+    background-color: var(--box-color);
+}
+@media(max-width:640px){
+    .countryDetails{
+        margin: 1rem;
+    }
+    .details{
+        flex-direction: column;
+        gap: 5rem;
+    }
+    .flag{
+        width: 100%;
+        height: 276px;
+    }
+
+    
+    .words{
+        width: 100%;
+    }
+
+    .moreDetails{
+        margin-top: 2rem;
+        flex-direction: column;
+        gap: 3rem;
+    }
+    .borders{
+        align-items:flex-start;
+        flex-direction: column;
+    }
+}

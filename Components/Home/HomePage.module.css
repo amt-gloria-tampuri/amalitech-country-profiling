@@ -1,0 +1,8 @@
+.layout{
+    color: var(--very-dark-blueLM);
+}
+.layDark{
+    min-height: 100vh;
+    color: var(--white);
+    background-color: var(--very-dark-blueDM);
+}
