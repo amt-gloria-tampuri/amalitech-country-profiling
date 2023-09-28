@@ -9,20 +9,18 @@ import classes from './HomePage.module.css'
 const Homepage = () => {
 
   const theme = useContext(ThemeContext)
-  console.log(theme?.theme);
 
   const [searchInput, setSearchInput] = useState('')
     const [selectedInput, setSelectedInput] = useState('')
 
   const onSearchInputHandler = (countryName:string) => {
     setSearchInput(countryName)
-    console.log(countryName);
+    
     
 }
 
 const onSelectedInputhandler = (selectedRegion:string) => {
     setSelectedInput(selectedRegion)
-    console.log(selectedRegion);
     
 }
 ;

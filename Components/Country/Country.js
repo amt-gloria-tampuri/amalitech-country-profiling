@@ -11,7 +11,6 @@ const CountryPage = () => {
   const router = useRouter();
 
   const { country } = router.query;
-  console.log(country);
 
   const [countryData, setCountryData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -30,7 +29,6 @@ const CountryPage = () => {
     }
   }, [country]);
 
-  console.log(countryData);
 
   return (
     <div className={`${classes.country} ${theme?.theme === 'dark' ? classes.countryD : ''}`}>
