@@ -58,7 +58,7 @@ const AllCountries: React.FC<AllCountriesProps> = ({ countryName, selectedRegion
             <div className={`${classes.countryDescriptions} ${theme?.theme === 'dark' ? classes.countryDescriptionsD : ''}`}>
               <h4>{country['name']['official']}</h4>
               <p>
-                Population: <span className={classes.emphasis}>{country['population'].toLocaleString()}</span>
+                Population: <span className={classes.emphasis}>{country['population'.toLocaleString()]}</span>
               </p>
               <p>
                 Region: <span className={classes.emphasis}>{country['region']}</span>
