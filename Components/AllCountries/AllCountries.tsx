@@ -30,9 +30,9 @@ const AllCountries: React.FC<AllCountriesProps> = ({ countryName, selectedRegion
         }
         const data = await response.json();
 
-        if (Array.isArray(data)) {
+        
           setFilteredCountries(data);
-        } 
+        
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
