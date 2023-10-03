@@ -40,12 +40,12 @@ const Filter: React.FC<FilterProps> = ({ onSearch, onSelect }) => {
         } `}
       >
         <select name='region' id='region-select' onChange={onSelectedRegion}>
-          <option value=''>Filter by Region</option>
-          <option value='africa'>Africa</option>
-          <option value='america'>America</option>
-          <option value='europe'>Europe</option>
-          <option value='oceania'>Oceania</option>
-          <option value='asia'>Asia</option>
+          <option className={classes.opt} value=''>Filter by Region</option>
+          <option className={classes.opt} value='africa'>Africa</option>
+          <option className={classes.opt} value='america'>America</option>
+          <option className={classes.opt} value='europe'>Europe</option>
+          <option className={classes.opt} value='oceania'>Oceania</option>
+          <option className={classes.opt} value='asia'>Asia</option>
         </select>
       </div>
     </div>

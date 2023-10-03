@@ -46,10 +46,25 @@ width: 90%;
    border-radius: 0.3rem;
    outline: none;
    background-color: white;
+   outline: none;
+   border: none;
+   margin-bottom: 1rem;
 }
+.filterdiv* {
+  padding: 0.5rem 1rem; 
+  outline: none;
+}
+.opt{
+  display: block;
+  margin-top:1rem;
+  /* background-color: yellow; */
+}
+
 .filDark select{
   background-color: var(--box-color);
   color: white;
+  outline: none;
+
 }
 
 
