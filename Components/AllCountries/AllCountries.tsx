@@ -11,10 +11,10 @@ interface AllCountriesProps {
 const AllCountries: React.FC<AllCountriesProps> = ({ countryName, selectedRegion }) => {
   const theme = useContext(ThemeContext);
   const [filteredCountries, setFilteredCountries] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setIsLoading(true);
+    // setIsLoading(true);
 
     const fetchData = async () => {
       try {
@@ -35,21 +35,19 @@ const AllCountries: React.FC<AllCountriesProps> = ({ countryName, selectedRegion
         
       } catch (error) {
         console.error('Error fetching data:', error);
-      } finally {
-        setIsLoading(false);
-      }
+      } 
     };
 
     fetchData();
   }, [countryName, selectedRegion]);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  // if (isLoading) {
+  //   return <div>Loading...</div>;
+  // }
 
   return (
     <div className={classes.gridContainer}>
-      {filteredCountries.map((country) => (
+      {filteredCountries?.map((country) => (
         <Link href={`${country['name']['common']}`} className={classes.link} key={country['cca3']}>
           <div className={`${classes.card} ${theme?.theme === 'dark' ? classes.cardD : ''}`}>
             <div className={classes.flag}>

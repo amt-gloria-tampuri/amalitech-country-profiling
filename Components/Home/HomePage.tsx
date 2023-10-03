@@ -15,13 +15,11 @@ const Homepage = () => {
 
   const onSearchInputHandler = (countryName:string) => {
     setSearchInput(countryName)
-    
-    
+      
 }
 
 const onSelectedInputhandler = (selectedRegion:string) => {
-    setSelectedInput(selectedRegion)
-    
+    setSelectedInput(selectedRegion)  
 }
 ;
 

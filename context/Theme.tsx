@@ -1,20 +1,20 @@
 import React, { createContext, useState, ReactNode } from 'react';
 
-// Define the type for your context values
+// Defining the type for your context values
 type ThemeContextType = {
   theme: string;
   themeHandler: () => void;
 };
 
-// Create the context with an initial value (it can be null)
+// Creating the context with an initial value (it can be null)
 export const ThemeContext = createContext<ThemeContextType | null>(null);
 
-// Create a props interface for the provider component
+// Creating a props interface for the provider component
 interface ThemeContextProviderProps {
   children: ReactNode;
 }
 
-// Create the provider component
+// Creating the provider component
 export const ThemeContextProvider: React.FC<ThemeContextProviderProps> = ({ children }) => {
   const [theme, setTheme] = useState('light');
 
