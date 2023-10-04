@@ -1,6 +1,4 @@
 import Head from 'next/head'
-import Filter from '../../Components/Filter/Filter'
-import Header from '../../Components/Header/Header'
 import Homepage from '../../Components/Home/HomePage'
 
 
