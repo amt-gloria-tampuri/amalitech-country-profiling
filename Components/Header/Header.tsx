@@ -9,8 +9,9 @@ const Header = () => {
   
 
   return (
-   <div>
-     <div className={`${classes.header} ${theme?.theme==='dark'? classes.headerD :''}`}>
+   <div className={`${classes.width} ${theme?.theme==='dark'? classes.headerD :''}`} >
+    
+     <div className={classes.header} >   
         <h1>Where in the world</h1>
         <div className={classes.darkMode} onClick={theme?.themeHandler}>
             <div> <BsFillMoonFill/> </div>

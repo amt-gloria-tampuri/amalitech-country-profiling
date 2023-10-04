@@ -26,12 +26,10 @@ interface CountryData {
   };
   borders: string[];
   flags: {
-    svg: string; // Add the flags property with a type
-    // You may need to add other properties related to flags if necessary
+    svg: string;
   };
-  // Add other properties as needed
+  cca3:string
 }
-
 
 const CountryPage: React.FC = () => {
   const theme = useContext(ThemeContext);
@@ -39,19 +37,40 @@ const CountryPage: React.FC = () => {
 
   const { country } = router.query;
 
-  const [countryData, setCountryData] = useState<CountryData[]>([]);
+  const [countryData, setCountryData] = useState<CountryData | null>(null);
+  const [borderCountries, setBorderCountries] = useState<string[]>([]);
 
   useEffect(() => {
-    if (country) {
-      fetch(`https://restcountries.com/v3.1/name/${country}`)
-        .then((response) => response.json())
-        .then((result: CountryData[]) => {
-          setCountryData(result); // Update state with fetched data
-        })
-        .catch((error) => {
-          console.error('Error fetching data:', error);
-        });
-    }
+    const fetchData = async () => {
+      try {
+        const response = await fetch('https://restcountries.com/v3.1/all');
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
+        }
+
+        const data: CountryData[] = await response.json();
+
+        if (country) {
+          // Find the country by name
+          const foundCountry = data.find((item) => item.name.common === country);
+
+          if (foundCountry) {
+            setCountryData(foundCountry); // Update state with fetched data
+            setBorderCountries(
+              foundCountry.borders.map((borderCode) => {
+                const borderCountry = data.find((item) => item.cca3 === borderCode);
+                return borderCountry ? borderCountry.name.common : borderCode;
+              })
+            );
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
   }, [country]);
 
   return (
@@ -65,52 +84,37 @@ const CountryPage: React.FC = () => {
           </div>
         </Link>
 
-        {Array.isArray(countryData) &&
-          countryData.map((country: CountryData) => (
-            <div className={classes.details} key={country?.name?.common}>
-              <div className={classes.flag}>
-                <img src={country?.flags?.svg} alt={country?.name?.common} />
-              </div>
-              <div className={classes.words}>
-                <h2>{country?.name?.common}</h2>
-                <div className={classes.moreDetails}>
-                  <div>
-                    <p>Native Name : <span>{country.name.common}</span></p>
-                    <p>Population : <span>{country.population.toLocaleString()}</span></p>
-                    <p>Region : <span>{country.region}</span></p>
-                    <p>Sub Region : <span>{country.subregion}</span></p>
-                    <p>Capital : <span>{country.capital}</span></p>
-                  </div>
-                  <div>
-                    <p>Top Level Domain : <span>{country.tld.map((tl) => <span key={tl}>{tl}</span>)}</span></p>
-                    <p>Currencies : <span>
-                      {Object.keys(country.currencies).map((currencyCode) => (
-                        <span key={currencyCode}>
-                          {country.currencies[currencyCode].name}
-                          {currencyCode !== Object.keys(country.currencies)[Object.keys(country.currencies).length - 1] ? ', ' : ''}
-                        </span>
-                      ))}
-                    </span></p>
-                    <p>Languages : <span>
-                      {Object.keys(country.languages).map((languageCode) => (
-                        <span key={languageCode}>
-                          {country.languages[languageCode]}
-                          {languageCode !== Object.keys(country.languages)[Object.keys(country.languages).length - 1] ? ', ' : ''}
-                        </span>
-                      ))}
-                    </span></p>
-                  </div>
+        {countryData !== null && (
+          <div className={classes.details} key={countryData.name.common}>
+            <div className={classes.flag}>
+              <img src={countryData.flags.svg} alt={countryData.name.common} />
+            </div>
+            <div className={classes.words}>
+              <h2>{countryData.name.common}</h2>
+              <div className={classes.moreDetails}>
+                <div>
+                  <p>Native Name : <span>{countryData.name.common}</span></p>
+                  <p>Population : <span>{countryData.population.toLocaleString()}</span></p>
+                  <p>Region : <span>{countryData.region}</span></p>
+                  <p>Sub Region : <span>{countryData.subregion}</span></p>
+                  <p>Capital : <span>{countryData.capital}</span></p>
                 </div>
+                <div>
+                  <p>Top Level Domain : <span>{countryData.tld.join(', ')}</span></p>
+                  <p>Currencies : <span>{Object.values(countryData.currencies).map((currency) => currency.name).join(', ')}</span></p>
+                  <p>Languages : <span>{Object.values(countryData.languages).join(', ')}</span></p>
+                </div>
+              </div>
 
-                <div className={classes.borders}>
-                  <p className={classes.borderDis}>Border Countries:</p>
-                  <div className={`${classes.styleBorder} ${theme?.theme === 'dark' ? classes.styleBorderD : ''}`}>
-                    {country?.borders?.map((border) => <div key={border}>{border}</div>)}
-                  </div>
+              <div className={classes.borders}>
+                <p className={classes.borderDis}>Border Countries:</p>
+                <div className={`${classes.styleBorder} ${theme?.theme === 'dark' ? classes.styleBorderD : ''}`}>
+                  {borderCountries.map((border) => <div key={border}>{border}</div>)}
                 </div>
               </div>
             </div>
-          ))}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,11 +1,13 @@
-
+.width{
+    box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.2);
+    width: 100%;
+}
 .header{
     display: flex;
-    padding: 1rem 3rem ;
+    width: 95%;
+    margin: 0 auto;
     align-items: center;
     justify-content: space-between;
-    box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.2);
-    /* background-color: white; */
 }
 .headerD{
     background-color: var(--box-color);
@@ -16,6 +18,8 @@
     gap: 0.3rem;
     cursor: pointer;
 }
+
+
 
 
 @media(max-width:640px){
