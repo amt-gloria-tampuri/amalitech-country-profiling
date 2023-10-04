@@ -25,7 +25,8 @@ const Filter: React.FC<FilterProps> = ({ onSearch, onSelect }) => {
 
 
   return (
-    <div className={classes.searchFilter}>
+   
+     <div className={classes.searchFilter}>
       <div
         className={` ${
           classes.search
@@ -42,13 +43,14 @@ const Filter: React.FC<FilterProps> = ({ onSearch, onSelect }) => {
         <select name='region' id='region-select' onChange={onSelectedRegion}>
           <option className={classes.opt} value=''>Filter by Region</option>
           <option className={classes.opt} value='africa'>Africa</option>
-          <option className={classes.opt} value='america'>America</option>
+          <option className={classes.opt} value='americas'>America</option>
           <option className={classes.opt} value='europe'>Europe</option>
           <option className={classes.opt} value='oceania'>Oceania</option>
           <option className={classes.opt} value='asia'>Asia</option>
         </select>
       </div>
     </div>
+   
   );
 };
 

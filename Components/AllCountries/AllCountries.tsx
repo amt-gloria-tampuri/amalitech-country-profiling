@@ -3,7 +3,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import classes from './AllCountries.module.css';
 import { ThemeContext } from '../../context/Theme';
 
-// Define an interface to describe the structure of the fetched country data
+
 interface CountryData {
   name: {
     common: string;
@@ -19,8 +19,8 @@ interface CountryData {
 }
 
 interface AllCountriesProps {
-  countryName: string; // A single country name for searching
-  selectedRegion: string; // The selected region for filtering
+  countryName: string; 
+  selectedRegion: string; 
 }
 
 const AllCountries: React.FC<AllCountriesProps> = ({ countryName, selectedRegion }) => {
@@ -38,10 +38,8 @@ const AllCountries: React.FC<AllCountriesProps> = ({ countryName, selectedRegion
 
         const data: CountryData[] = await response.json();
 
-        // Debugging: Log the fetched data
         console.log('Fetched data:', data);
 
-        // Filter data based on selectedRegion and countryName
         let filteredData: CountryData[] = data;
 
         if (countryName) {
@@ -54,10 +52,8 @@ const AllCountries: React.FC<AllCountriesProps> = ({ countryName, selectedRegion
           filteredData = filteredData.filter((country) => country.region.toLowerCase() === selectedRegion.toLowerCase());
         }
 
-        // Debugging: Log the filtered data
         console.log('Filtered data:', filteredData);
 
-        // Set the filtered data to state
         setFilteredCountries(filteredData);
       } catch (error) {
         console.error('Error fetching data:', error);
