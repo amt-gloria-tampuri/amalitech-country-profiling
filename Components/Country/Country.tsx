@@ -6,7 +6,6 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { BiArrowBack } from 'react-icons/bi';
 
-// Define a TypeScript interface for the country data
 interface CountryData {
   name: {
     common: string;
@@ -45,18 +44,11 @@ const CountryPage: React.FC = () => {
       try {
         const response = await fetch('https://restcountries.com/v3.1/all');
 
-        if (!response.ok) {
-          throw new Error('Failed to fetch data');
-        }
-
         const data: CountryData[] = await response.json();
-
         if (country) {
-          // Find the country by name
           const foundCountry = data.find((item) => item.name.common === country);
-
           if (foundCountry) {
-            setCountryData(foundCountry); // Update state with fetched data
+            setCountryData(foundCountry); 
             setBorderCountries(
               foundCountry.borders.map((borderCode) => {
                 const borderCountry = data.find((item) => item.cca3 === borderCode);
