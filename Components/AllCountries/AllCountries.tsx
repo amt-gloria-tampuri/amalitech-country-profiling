@@ -2,7 +2,7 @@ import Link from 'next/link';
 import React, { useContext, useState, useEffect } from 'react';
 import classes from './AllCountries.module.css';
 import { ThemeContext } from '../../context/Theme';
-
+import { useCountryData } from '../../context/CountryContext';
 
 interface CountryData {
   name: {
@@ -19,49 +19,41 @@ interface CountryData {
 }
 
 interface AllCountriesProps {
-  countryName: string; 
-  selectedRegion: string; 
+  countryName: string;
+  selectedRegion: string;
 }
 
 const AllCountries: React.FC<AllCountriesProps> = ({ countryName, selectedRegion }) => {
   const theme = useContext(ThemeContext);
+  const countryData = useCountryData();
+
   const [filteredCountries, setFilteredCountries] = useState<CountryData[]>([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('https://restcountries.com/v3.1/all');
+    // Define a function to filter the data based on the inputs
+    const filterData = () => {
+      let filteredData = countryData;
 
-        if (!response.ok) {
-          throw new Error('Failed to fetch data');
-        }
-
-        const data: CountryData[] = await response.json();
-
-        console.log('Fetched data:', data);
-
-        let filteredData: CountryData[] = data;
-
-        if (countryName) {
-          filteredData = filteredData.filter((country) =>
-            country.name.common.toLowerCase() === countryName.toLowerCase()
-          );
-        }
-
-        if (selectedRegion) {
-          filteredData = filteredData.filter((country) => country.region.toLowerCase() === selectedRegion.toLowerCase());
-        }
-
-        console.log('Filtered data:', filteredData);
-
-        setFilteredCountries(filteredData);
-      } catch (error) {
-        console.error('Error fetching data:', error);
+      if (selectedRegion) {
+        // Filter by selectedRegion if it's provided
+        filteredData = filteredData.filter((country) =>
+          country.region.toLowerCase() === selectedRegion.toLowerCase()
+        );
       }
+
+      if (countryName) {
+        // If countryName is provided, apply an additional filter
+        filteredData = filteredData.filter((country) =>
+          country.name.common.toLowerCase() === countryName.toLowerCase()
+        );
+      }
+
+      setFilteredCountries(filteredData);
     };
 
-    fetchData();
-  }, [selectedRegion, countryName]);
+    // Call the filterData function whenever inputs change
+    filterData();
+  }, [countryName, selectedRegion, countryData]);
 
   return (
     <div className={classes.gridContainer}>

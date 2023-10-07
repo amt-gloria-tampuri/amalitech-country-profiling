@@ -5,15 +5,21 @@ import Header from '../Header/Header';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { BiArrowBack } from 'react-icons/bi';
+import { useCountryData } from '../../context/CountryContext';
 
 interface CountryData {
   name: {
     common: string;
+    official: string;
+  };
+  cca3: string;
+  flags: {
+    svg: string;
   };
   population: number;
   region: string;
   subregion: string;
-  capital: string;
+  capital: string[]; 
   tld: string[];
   currencies: {
     [currencyCode: string]: {
@@ -24,46 +30,33 @@ interface CountryData {
     [languageCode: string]: string;
   };
   borders: string[];
-  flags: {
-    svg: string;
-  };
-  cca3:string
 }
 
 const CountryPage: React.FC = () => {
   const theme = useContext(ThemeContext);
   const router = useRouter();
 
+  const countryData = useCountryData();
+
   const { country } = router.query;
 
-  const [countryData, setCountryData] = useState<CountryData | null>(null);
   const [borderCountries, setBorderCountries] = useState<string[]>([]);
+  const [individualCountry, setIndividualCountry] = useState<CountryData | null>(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('https://restcountries.com/v3.1/all');
-
-        const data: CountryData[] = await response.json();
-        if (country) {
-          const foundCountry = data.find((item) => item.name.common === country);
-          if (foundCountry) {
-            setCountryData(foundCountry); 
-            setBorderCountries(
-              foundCountry.borders.map((borderCode) => {
-                const borderCountry = data.find((item) => item.cca3 === borderCode);
-                return borderCountry ? borderCountry.name.common : borderCode;
-              })
-            );
-          }
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
+    if (countryData && country) {
+      const foundCountry = countryData.find((item) => item.name.common === country);
+      setIndividualCountry(foundCountry || null); 
+      if (foundCountry) {
+        setBorderCountries(
+          foundCountry.borders.map((borderCode) => {
+            const borderCountry = countryData.find((item) => item.cca3 === borderCode);
+            return borderCountry ? borderCountry.name.common : borderCode;
+          })
+        );
       }
-    };
-
-    fetchData();
-  }, [country]);
+    }
+  }, [countryData, country]);
 
   return (
     <div className={`${classes.country} ${theme?.theme === 'dark' ? classes.countryD : ''}`}>
@@ -76,25 +69,25 @@ const CountryPage: React.FC = () => {
           </div>
         </Link>
 
-        {countryData !== null && (
-          <div className={classes.details} key={countryData.name.common}>
+        {individualCountry !== null && (
+          <div className={classes.details} key={individualCountry.name.common}>
             <div className={classes.flag}>
-              <img src={countryData.flags.svg} alt={countryData.name.common} />
+              <img src={individualCountry.flags.svg} alt={individualCountry.name.common} />
             </div>
             <div className={classes.words}>
-              <h2>{countryData.name.common}</h2>
+              <h2>{individualCountry.name.common}</h2>
               <div className={classes.moreDetails}>
                 <div>
-                  <p>Native Name : <span>{countryData.name.common}</span></p>
-                  <p>Population : <span>{countryData.population.toLocaleString()}</span></p>
-                  <p>Region : <span>{countryData.region}</span></p>
-                  <p>Sub Region : <span>{countryData.subregion}</span></p>
-                  <p>Capital : <span>{countryData.capital}</span></p>
+                  <p>Native Name : <span>{individualCountry.name.common}</span></p>
+                  <p>Population : <span>{individualCountry.population.toLocaleString()}</span></p>
+                  <p>Region : <span>{individualCountry.region}</span></p>
+                  <p>Sub Region : <span>{individualCountry.subregion}</span></p>
+                  <p>Capital : <span>{individualCountry.capital.join(', ')}</span></p> {/* Handle as array */}
                 </div>
                 <div>
-                  <p>Top Level Domain : <span>{countryData.tld.join(', ')}</span></p>
-                  <p>Currencies : <span>{Object.values(countryData.currencies).map((currency) => currency.name).join(', ')}</span></p>
-                  <p>Languages : <span>{Object.values(countryData.languages).join(', ')}</span></p>
+                  <p>Top Level Domain : <span>{individualCountry.tld.join(', ')}</span></p>
+                  <p>Currencies : <span>{Object.values(individualCountry.currencies).map((currency) => currency.name).join(', ')}</span></p>
+                  <p>Languages : <span>{Object.values(individualCountry.languages).join(', ')}</span></p>
                 </div>
               </div>
 
